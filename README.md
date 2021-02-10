@@ -1,4 +1,4 @@
-#api-automation
+# device_api
 
 ## Description:
 This framework supports automation testing of APIs. 
