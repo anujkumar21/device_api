@@ -1,0 +1,770 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Test Report</title>
+    <meta name="author" content="Oleksii Skliarov, Ivan Lysenko"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css" media="screen">
+        body        { font-family: verdana, arial, helvetica, sans-serif; font-size: 80%; }
+        table       { font-size: 100%; }
+        pre         { }
+
+        /* -- heading ---------------------------------------------------------------------- */
+        h1 {
+            font-size: 16pt;
+            color: gray;
+        }
+        .heading {
+            margin-top: 0ex;
+            margin-bottom: 1ex;
+        }
+
+        .heading .attribute {
+            margin-top: 1ex;
+            margin-bottom: 0;
+        }
+
+        .heading .description {
+            margin-top: 4ex;
+            margin-bottom: 6ex;
+        }
+
+        /* -- css div popup ------------------------------------------------------------------------ */
+        a.popup_link {
+        }
+
+        a.popup_link:hover {
+            color: red;
+        }
+
+        .popup_window {
+            display: none;
+            position: relative;
+            left: 0px;
+            top: 0px;
+            /*border: solid #627173 1px; */
+            padding: 8px;
+            background-color: #E6E6D6;
+            font-family: "Lucida Console", "Courier New", Courier, monospace;
+            text-align: left;
+            font-size: 8pt;
+            width: 570px;
+        }
+
+        }
+        /* -- report ------------------------------------------------------------------------ */
+        #show_detail_line {
+            margin-top: 3ex;
+            margin-bottom: 1ex;
+        }
+        .result_table {
+            width: 80%;
+            border-collapse: collapse;
+            border: 1px solid #777;
+        }
+        #header_row {
+            font-weight: bold;
+            color: white;
+            background-color: #777;
+        }
+        .result_table td {
+            border: 1px solid #777;
+            padding: 2px;
+        }
+        .shortDescription {
+            font-style: italic;
+            font-weight: normal;
+        }
+        #total_row  { font-weight: bold; }
+        .passClass  { background-color: #6c6; }
+        .failClass  { background-color: #c60; }
+        .errorClass { background-color: #c00; }
+        .passCase   { color: #6c6; }
+        .failCase   { color: #c60; font-weight: bold; }
+        .errorCase  { color: #c00; font-weight: bold; }
+        .hiddenRow  { display: none; }
+        
+        .testcase   { display: none; }
+		.testclass.active ~ .testcase { display: table-row; }
+
+        /* -- ending ---------------------------------------------------------------------- */
+        #ending {
+        }
+
+    </style>
+</head>
+<body>
+<script language="javascript" type="text/javascript">
+output_list = Array();
+
+/* level - 0:Summary; 1:Failed; 2:All */
+function showCase(level) {
+    trs = document.getElementsByClassName("testclass");
+    for (var i = 0; i < trs.length; i++) {
+        tr = trs[i];
+        if(0==level && tr.className.indexOf("active") != -1){
+			tr.className = tr.className.replace("active", "").replace("  ", " ").trim();
+		}else if (2 == level && tr.className.indexOf("active") == -1){
+			tr.className+=" active";
+		}else if (1 == level){
+			if(tr.className.indexOf("passClass") != -1){
+				if(tr.className.indexOf("active") != -1){
+					tr.className = tr.className.replace("active", "").replace("  ", " ").trim();
+				}
+			}else if (tr.className.indexOf("active") == -1){
+				tr.className+=" active";
+			}
+        }
+    }
+}
+
+function showClassDetail(element) {
+    var currentClassValue = element.className || "";
+      
+    if (currentClassValue.indexOf("active") == -1) {
+		currentClassValue += " active";
+    } else {
+		currentClassValue = currentClassValue.replace("active", "").replace("  ", " ");
+	}
+	element.className = currentClassValue.trim();
+}
+
+
+function showTestDetail(div_id){
+    var details_div = document.getElementById(div_id)
+    var displayState = details_div.style.display
+    // alert(displayState)
+    if (displayState != 'block' ) {
+        displayState = 'block'
+        details_div.style.display = 'block'
+    }
+    else {
+        details_div.style.display = 'none'
+    }
+}
+
+function togleClass(element, clas){
+        var currentClassValue = element.className || "";
+
+        if (currentClassValue.indexOf(clas) == -1) {
+            currentClassValue += " "+clas;
+        } else {
+            currentClassValue = currentClassValue.replace(clas, "").replace("  ", " ");
+        }
+        element.className = currentClassValue.trim()
+    }
+
+function showRawLog(element){
+        togleClass(element, "popup_window")
+    }
+
+function html_escape(s) {
+    s = s.replace(/&/g,'&amp;');
+    s = s.replace(/</g,'&lt;');
+    s = s.replace(/>/g,'&gt;');
+    return s;
+}
+
+</script>
+
+<table>
+    <tr id="header_row">
+        <th>Class</th>
+        <th>Fail</th>
+        <th>Error</th>
+        <th>Skip</th>
+        <th>Success</th>
+        <th>Total</th>
+    </tr>
+        <tr>
+            <td>testcases.test_update_devices.TestUpdateDevices</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>4</td>
+            <td>4</td>
+        </tr>
+        <tr>
+            <td>testcases.test_disconnect_devices.TestDisconnect</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>1</td>
+            <td>1</td>
+        </tr>
+        <tr>
+            <td>testcases.test_device_state.TestDeviceState</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>2</td>
+            <td>2</td>
+        </tr>
+        <tr>
+            <td>testcases.test_connect_devices.TestConnectDevices</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>4</td>
+            <td>4</td>
+        </tr>
+        <tr>
+            <td>testcases.test_get_devices.GetDevicesTest</td>
+            <td>0</td>
+            <td>0</td>
+            <td>0</td>
+            <td>2</td>
+            <td>2</td>
+        </tr>
+    <tr>
+        <td><strong>Total</strong></td>
+        <td>0</td>
+        <td>0</td>
+        <td>0</td>
+        <td>13</td>
+        <td>13</td>
+    </tr>
+</table>
+
+<!-- test list -->
+<!-- header -->
+<p id='show_detail_line'>Show
+<a href='javascript:showCase(0)'>Summary</a>
+<a href='javascript:showCase(1)'>Failed</a>
+<a href='javascript:showCase(2)'>All</a>
+</p>
+<table class='result_table'>
+    <colgroup>
+        <col align='left' width="50%" />
+        <col align='right' width="10%"/>
+        <col align='right' width="10%"/>
+        <col align='right' width="10%"/>
+        <col align='right' width="10%"/>
+        <col align='right' width="10%"/>
+    </colgroup>
+    <tr id='header_row'>
+        <td>Test Group/Test case</td>
+        <td>Count</td>
+        <td>Pass</td>
+        <td>Fail</td>
+        <td>Error</td>
+        <td>View</td>
+    </tr>
+</table>    
+<!-- for every test suite -->
+    <table class='result_table'>
+	    <colgroup>
+            <col align='left' width="50%" />
+            <col align='right' width="10%"/>
+            <col align='right' width="10%"/>
+            <col align='right' width="10%"/>
+            <col align='right' width="10%"/>
+            <col align='right' width="10%"/>
+        </colgroup>
+        <tr class='testclass passClass'>
+            <td>testcases.test_update_devices.TestUpdateDevices</td>
+            <td>4</td>
+            <td>4</td>
+            <td>0</td>
+            <td>0</td>
+            <td><a href="javascript:void(0)" onclick="showClassDetail(this.parentNode.parentNode)">Detail</a></td>
+        </tr>    
+        <!-- for every test -->
+
+<tr id='testcases.test_update_devices.TestUpdateDevicestest_update_device_0_name' class='testcase'>
+            <td class="passCase">
+                test_update_device_0_name
+                    <div class="shortDescription">
+                        Verify user should be able to update device properties [with key='name', value='automation'].
+                    </div>
+            </td>
+            <td>0:00:00.015175</td>
+            <td colspan='4' align='center'>
+            <!--css div popup start-->
+            <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_testcases.test_update_devices.TestUpdateDevicestest_update_device_0_name')" >
+                Pass
+            </a>
+
+            <div id='div_testcases.test_update_devices.TestUpdateDevicestest_update_device_0_name' class="popup_window">
+                <div style='text-align: right; color:red; cursor:pointer;'>
+                <a onfocus='this.blur();' onclick="document.getElementById('div_testcases.test_update_devices.TestUpdateDevicestest_update_device_0_name').style.display = 'none' " >
+                   [x]</a>
+                </div>
+                <pre>
+
+
+                </pre>
+            </div>
+            <!--css div popup end-->
+
+            </td>
+        </tr>
+<tr id='testcases.test_update_devices.TestUpdateDevicestest_update_device_1_color' class='testcase'>
+            <td class="passCase">
+                test_update_device_1_color
+                    <div class="shortDescription">
+                        Verify user should be able to update device properties [with key='color', value='#9FE2BF'].
+                    </div>
+            </td>
+            <td>0:00:00.015041</td>
+            <td colspan='4' align='center'>
+            <!--css div popup start-->
+            <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_testcases.test_update_devices.TestUpdateDevicestest_update_device_1_color')" >
+                Pass
+            </a>
+
+            <div id='div_testcases.test_update_devices.TestUpdateDevicestest_update_device_1_color' class="popup_window">
+                <div style='text-align: right; color:red; cursor:pointer;'>
+                <a onfocus='this.blur();' onclick="document.getElementById('div_testcases.test_update_devices.TestUpdateDevicestest_update_device_1_color').style.display = 'none' " >
+                   [x]</a>
+                </div>
+                <pre>
+
+
+                </pre>
+            </div>
+            <!--css div popup end-->
+
+            </td>
+        </tr>
+<tr id='testcases.test_update_devices.TestUpdateDevicestest_update_device_2_brightness' class='testcase'>
+            <td class="passCase">
+                test_update_device_2_brightness
+                    <div class="shortDescription">
+                        Verify user should be able to update device properties [with key='brightness', value='5.0'].
+                    </div>
+            </td>
+            <td>0:00:00.014957</td>
+            <td colspan='4' align='center'>
+            <!--css div popup start-->
+            <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_testcases.test_update_devices.TestUpdateDevicestest_update_device_2_brightness')" >
+                Pass
+            </a>
+
+            <div id='div_testcases.test_update_devices.TestUpdateDevicestest_update_device_2_brightness' class="popup_window">
+                <div style='text-align: right; color:red; cursor:pointer;'>
+                <a onfocus='this.blur();' onclick="document.getElementById('div_testcases.test_update_devices.TestUpdateDevicestest_update_device_2_brightness').style.display = 'none' " >
+                   [x]</a>
+                </div>
+                <pre>
+
+
+                </pre>
+            </div>
+            <!--css div popup end-->
+
+            </td>
+        </tr>
+<tr id='testcases.test_update_devices.TestUpdateDevicestest_update_device_ip' class='testcase'>
+            <td class="passCase">
+                test_update_device_ip
+                    <div class="shortDescription">
+                        Verify user should be able to update device properties.
+                    </div>
+            </td>
+            <td>0:00:00.013440</td>
+            <td colspan='4' align='center'>
+            <!--css div popup start-->
+            <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_testcases.test_update_devices.TestUpdateDevicestest_update_device_ip')" >
+                Pass
+            </a>
+
+            <div id='div_testcases.test_update_devices.TestUpdateDevicestest_update_device_ip' class="popup_window">
+                <div style='text-align: right; color:red; cursor:pointer;'>
+                <a onfocus='this.blur();' onclick="document.getElementById('div_testcases.test_update_devices.TestUpdateDevicestest_update_device_ip').style.display = 'none' " >
+                   [x]</a>
+                </div>
+                <pre>
+
+
+                </pre>
+            </div>
+            <!--css div popup end-->
+
+            </td>
+        </tr>    <table class='result_table'>
+	    <colgroup>
+            <col align='left' width="50%" />
+            <col align='right' width="10%"/>
+            <col align='right' width="10%"/>
+            <col align='right' width="10%"/>
+            <col align='right' width="10%"/>
+            <col align='right' width="10%"/>
+        </colgroup>
+        <tr class='testclass passClass'>
+            <td>testcases.test_disconnect_devices.TestDisconnect</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>0</td>
+            <td><a href="javascript:void(0)" onclick="showClassDetail(this.parentNode.parentNode)">Detail</a></td>
+        </tr>    
+        <!-- for every test -->
+
+<tr id='testcases.test_disconnect_devices.TestDisconnecttest_disconnect' class='testcase'>
+            <td class="passCase">
+                test_disconnect
+                    <div class="shortDescription">
+                        Verify user should be able to disconnect devices.
+                    </div>
+            </td>
+            <td>0:00:00.006701</td>
+            <td colspan='4' align='center'>
+            <!--css div popup start-->
+            <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_testcases.test_disconnect_devices.TestDisconnecttest_disconnect')" >
+                Pass
+            </a>
+
+            <div id='div_testcases.test_disconnect_devices.TestDisconnecttest_disconnect' class="popup_window">
+                <div style='text-align: right; color:red; cursor:pointer;'>
+                <a onfocus='this.blur();' onclick="document.getElementById('div_testcases.test_disconnect_devices.TestDisconnecttest_disconnect').style.display = 'none' " >
+                   [x]</a>
+                </div>
+                <pre>
+
+
+                </pre>
+            </div>
+            <!--css div popup end-->
+
+            </td>
+        </tr>    <table class='result_table'>
+	    <colgroup>
+            <col align='left' width="50%" />
+            <col align='right' width="10%"/>
+            <col align='right' width="10%"/>
+            <col align='right' width="10%"/>
+            <col align='right' width="10%"/>
+            <col align='right' width="10%"/>
+        </colgroup>
+        <tr class='testclass passClass'>
+            <td>testcases.test_device_state.TestDeviceState</td>
+            <td>2</td>
+            <td>2</td>
+            <td>0</td>
+            <td>0</td>
+            <td><a href="javascript:void(0)" onclick="showClassDetail(this.parentNode.parentNode)">Detail</a></td>
+        </tr>    
+        <!-- for every test -->
+
+<tr id='testcases.test_device_state.TestDeviceStatetest_device_state' class='testcase'>
+            <td class="passCase">
+                test_device_state
+                    <div class="shortDescription">
+                        Verify user should be able to validate device state.
+                    </div>
+            </td>
+            <td>0:00:00.008119</td>
+            <td colspan='4' align='center'>
+            <!--css div popup start-->
+            <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_testcases.test_device_state.TestDeviceStatetest_device_state')" >
+                Pass
+            </a>
+
+            <div id='div_testcases.test_device_state.TestDeviceStatetest_device_state' class="popup_window">
+                <div style='text-align: right; color:red; cursor:pointer;'>
+                <a onfocus='this.blur();' onclick="document.getElementById('div_testcases.test_device_state.TestDeviceStatetest_device_state').style.display = 'none' " >
+                   [x]</a>
+                </div>
+                <pre>
+
+
+                </pre>
+            </div>
+            <!--css div popup end-->
+
+            </td>
+        </tr>
+<tr id='testcases.test_device_state.TestDeviceStatetest_no_device_connected_state' class='testcase'>
+            <td class="passCase">
+                test_no_device_connected_state
+                    <div class="shortDescription">
+                        Verify success status is False when no device is connected.
+                    </div>
+            </td>
+            <td>0:00:00.004952</td>
+            <td colspan='4' align='center'>
+            <!--css div popup start-->
+            <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_testcases.test_device_state.TestDeviceStatetest_no_device_connected_state')" >
+                Pass
+            </a>
+
+            <div id='div_testcases.test_device_state.TestDeviceStatetest_no_device_connected_state' class="popup_window">
+                <div style='text-align: right; color:red; cursor:pointer;'>
+                <a onfocus='this.blur();' onclick="document.getElementById('div_testcases.test_device_state.TestDeviceStatetest_no_device_connected_state').style.display = 'none' " >
+                   [x]</a>
+                </div>
+                <pre>
+
+
+                </pre>
+            </div>
+            <!--css div popup end-->
+
+            </td>
+        </tr>    <table class='result_table'>
+	    <colgroup>
+            <col align='left' width="50%" />
+            <col align='right' width="10%"/>
+            <col align='right' width="10%"/>
+            <col align='right' width="10%"/>
+            <col align='right' width="10%"/>
+            <col align='right' width="10%"/>
+        </colgroup>
+        <tr class='testclass passClass'>
+            <td>testcases.test_connect_devices.TestConnectDevices</td>
+            <td>4</td>
+            <td>4</td>
+            <td>0</td>
+            <td>0</td>
+            <td><a href="javascript:void(0)" onclick="showClassDetail(this.parentNode.parentNode)">Detail</a></td>
+        </tr>    
+        <!-- for every test -->
+
+<tr id='testcases.test_connect_devices.TestConnectDevicestest_connect' class='testcase'>
+            <td class="passCase">
+                test_connect
+                    <div class="shortDescription">
+                        Verify user should be able to connect devices using POST API.
+                    </div>
+            </td>
+            <td>0:00:00.012042</td>
+            <td colspan='4' align='center'>
+            <!--css div popup start-->
+            <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_testcases.test_connect_devices.TestConnectDevicestest_connect')" >
+                Pass
+            </a>
+
+            <div id='div_testcases.test_connect_devices.TestConnectDevicestest_connect' class="popup_window">
+                <div style='text-align: right; color:red; cursor:pointer;'>
+                <a onfocus='this.blur();' onclick="document.getElementById('div_testcases.test_connect_devices.TestConnectDevicestest_connect').style.display = 'none' " >
+                   [x]</a>
+                </div>
+                <pre>
+
+
+                </pre>
+            </div>
+            <!--css div popup end-->
+
+            </td>
+        </tr>
+<tr id='testcases.test_connect_devices.TestConnectDevicestest_connect_with_get_request_type' class='testcase'>
+            <td class="passCase">
+                test_connect_with_get_request_type
+                    <div class="shortDescription">
+                        Verify user should not be able to send connect POST API as GET request.
+                    </div>
+            </td>
+            <td>0:00:00.008120</td>
+            <td colspan='4' align='center'>
+            <!--css div popup start-->
+            <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_testcases.test_connect_devices.TestConnectDevicestest_connect_with_get_request_type')" >
+                Pass
+            </a>
+
+            <div id='div_testcases.test_connect_devices.TestConnectDevicestest_connect_with_get_request_type' class="popup_window">
+                <div style='text-align: right; color:red; cursor:pointer;'>
+                <a onfocus='this.blur();' onclick="document.getElementById('div_testcases.test_connect_devices.TestConnectDevicestest_connect_with_get_request_type').style.display = 'none' " >
+                   [x]</a>
+                </div>
+                <pre>
+
+
+                </pre>
+            </div>
+            <!--css div popup end-->
+
+            </td>
+        </tr>
+<tr id='testcases.test_connect_devices.TestConnectDevicestest_connect_with_invalid_ip' class='testcase'>
+            <td class="passCase">
+                test_connect_with_invalid_ip
+                    <div class="shortDescription">
+                        Verify POST API should return success as False for invalid ip.
+                    </div>
+            </td>
+            <td>0:00:00.005208</td>
+            <td colspan='4' align='center'>
+            <!--css div popup start-->
+            <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_testcases.test_connect_devices.TestConnectDevicestest_connect_with_invalid_ip')" >
+                Pass
+            </a>
+
+            <div id='div_testcases.test_connect_devices.TestConnectDevicestest_connect_with_invalid_ip' class="popup_window">
+                <div style='text-align: right; color:red; cursor:pointer;'>
+                <a onfocus='this.blur();' onclick="document.getElementById('div_testcases.test_connect_devices.TestConnectDevicestest_connect_with_invalid_ip').style.display = 'none' " >
+                   [x]</a>
+                </div>
+                <pre>
+
+
+                </pre>
+            </div>
+            <!--css div popup end-->
+
+            </td>
+        </tr>
+<tr id='testcases.test_connect_devices.TestConnectDevicestest_single_device_connected' class='testcase'>
+            <td class="passCase">
+                test_single_device_connected
+                    <div class="shortDescription">
+                        Verify user should be able to connect one device at a time.
+                    </div>
+            </td>
+            <td>0:00:00.007109</td>
+            <td colspan='4' align='center'>
+            <!--css div popup start-->
+            <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_testcases.test_connect_devices.TestConnectDevicestest_single_device_connected')" >
+                Pass
+            </a>
+
+            <div id='div_testcases.test_connect_devices.TestConnectDevicestest_single_device_connected' class="popup_window">
+                <div style='text-align: right; color:red; cursor:pointer;'>
+                <a onfocus='this.blur();' onclick="document.getElementById('div_testcases.test_connect_devices.TestConnectDevicestest_single_device_connected').style.display = 'none' " >
+                   [x]</a>
+                </div>
+                <pre>
+
+
+                </pre>
+            </div>
+            <!--css div popup end-->
+
+            </td>
+        </tr>    <table class='result_table'>
+	    <colgroup>
+            <col align='left' width="50%" />
+            <col align='right' width="10%"/>
+            <col align='right' width="10%"/>
+            <col align='right' width="10%"/>
+            <col align='right' width="10%"/>
+            <col align='right' width="10%"/>
+        </colgroup>
+        <tr class='testclass passClass'>
+            <td>testcases.test_get_devices.GetDevicesTest</td>
+            <td>2</td>
+            <td>2</td>
+            <td>0</td>
+            <td>0</td>
+            <td><a href="javascript:void(0)" onclick="showClassDetail(this.parentNode.parentNode)">Detail</a></td>
+        </tr>    
+        <!-- for every test -->
+
+<tr id='testcases.test_get_devices.GetDevicesTesttest_get_devices' class='testcase'>
+            <td class="passCase">
+                test_get_devices
+                    <div class="shortDescription">
+                        Verify GET request to get all devices.
+                    </div>
+            </td>
+            <td>0:00:00.007612</td>
+            <td colspan='4' align='center'>
+            <!--css div popup start-->
+            <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_testcases.test_get_devices.GetDevicesTesttest_get_devices')" >
+                Pass
+            </a>
+
+            <div id='div_testcases.test_get_devices.GetDevicesTesttest_get_devices' class="popup_window">
+                <div style='text-align: right; color:red; cursor:pointer;'>
+                <a onfocus='this.blur();' onclick="document.getElementById('div_testcases.test_get_devices.GetDevicesTesttest_get_devices').style.display = 'none' " >
+                   [x]</a>
+                </div>
+                <pre>
+
+
+                </pre>
+            </div>
+            <!--css div popup end-->
+
+            </td>
+        </tr>
+<tr id='testcases.test_get_devices.GetDevicesTesttest_get_devices_with_invalid_path' class='testcase'>
+            <td class="passCase">
+                test_get_devices_with_invalid_path
+                    <div class="shortDescription">
+                        Verify GET request path.
+                    </div>
+            </td>
+            <td>0:00:00.007509</td>
+            <td colspan='4' align='center'>
+            <!--css div popup start-->
+            <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_testcases.test_get_devices.GetDevicesTesttest_get_devices_with_invalid_path')" >
+                Pass
+            </a>
+
+            <div id='div_testcases.test_get_devices.GetDevicesTesttest_get_devices_with_invalid_path' class="popup_window">
+                <div style='text-align: right; color:red; cursor:pointer;'>
+                <a onfocus='this.blur();' onclick="document.getElementById('div_testcases.test_get_devices.GetDevicesTesttest_get_devices_with_invalid_path').style.display = 'none' " >
+                   [x]</a>
+                </div>
+                <pre>
+
+
+                </pre>
+            </div>
+            <!--css div popup end-->
+
+            </td>
+        </tr></table>
+    <table class='result_table'>
+        <colgroup>
+            <col align='left' width="50%"/>
+            <col align='right' width="10%" id="results_count"/>
+            <col align='right' width="10%" id="results_passed"/>
+            <col align='right' width="10%" id="results_failed"/>
+            <col align='right' width="10%" id="results_errors"/>
+            <col align='right' width="10%"/>
+        </colgroup>
+        <!-- test list end -->
+        <tr id='total_row'>
+            <td>Total</td>
+            <td>13</td>
+            <td>13</td>
+            <td>0</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+        </tr>
+    </table>
+    <br/>
+    <a href="javascript:void(0)" onclick="showRawLog(document.getElementById('rawoutput'))">Full log raw output</a>
+    <div id='rawoutput' class='popup_window'>
+        <pre>02/10/2021 12:40:28 PM - INFO: # POST url: http://localhost:8080/connect
+02/10/2021 12:40:28 PM - INFO: # Actual response code: 200
+02/10/2021 12:40:28 PM - INFO: # POST url: http://localhost:8080/connect
+02/10/2021 12:40:28 PM - INFO: # Actual response code: 405
+02/10/2021 12:40:28 PM - INFO: # POST url: http://localhost:8080/connect
+02/10/2021 12:40:28 PM - INFO: # Actual response code: 200
+02/10/2021 12:40:28 PM - INFO: # POST url: http://localhost:8080/connect
+02/10/2021 12:40:28 PM - INFO: # Actual response code: 200
+02/10/2021 12:40:28 PM - INFO: # Device 192.168.100.10 has been connected.
+02/10/2021 12:40:28 PM - INFO: # GET device state endpoint: http://localhost:8080/state
+02/10/2021 12:40:28 PM - INFO: # Actual response code: 200
+02/10/2021 12:40:28 PM - INFO: # GET device state endpoint: http://localhost:8080/state
+02/10/2021 12:40:28 PM - INFO: # Actual response code: 200
+02/10/2021 12:40:28 PM - INFO: # POST url: http://localhost:8080/disconnect
+02/10/2021 12:40:28 PM - INFO: # Actual response code: 200
+02/10/2021 12:40:28 PM - INFO: # GET devices url: http://localhost:8080/devices
+02/10/2021 12:40:28 PM - INFO: # Actual response code: 200
+02/10/2021 12:40:28 PM - INFO: # Actual devices: [{u'ip': u'192.168.100.10', u'name': u'bulb1'}, {u'ip': u'192.168.100.11', u'name': u'bulb2'}]
+02/10/2021 12:40:28 PM - INFO: # GET devices url: http://localhost:8080/dev
+02/10/2021 12:40:28 PM - INFO: # Actual response code: 404
+02/10/2021 12:40:28 PM - INFO: # Device 192.168.100.10 has been connected.
+02/10/2021 12:40:28 PM - INFO: # POST url: http://localhost:8080/name
+02/10/2021 12:40:28 PM - INFO: # Actual response code: 200
+02/10/2021 12:40:28 PM - INFO: # GET device state endpoint: http://localhost:8080/state
+02/10/2021 12:40:28 PM - INFO: # Device 192.168.100.10 has been connected.
+02/10/2021 12:40:28 PM - INFO: # POST url: http://localhost:8080/color
+02/10/2021 12:40:28 PM - INFO: # Actual response code: 200
+02/10/2021 12:40:28 PM - INFO: # GET device state endpoint: http://localhost:8080/state
+02/10/2021 12:40:28 PM - INFO: # Device 192.168.100.10 has been connected.
+02/10/2021 12:40:28 PM - INFO: # POST url: http://localhost:8080/brightness
+02/10/2021 12:40:28 PM - INFO: # Actual response code: 200
+02/10/2021 12:40:28 PM - INFO: # GET device state endpoint: http://localhost:8080/state
+02/10/2021 12:40:28 PM - INFO: # Device 192.168.100.10 has been connected.
+02/10/2021 12:40:28 PM - INFO: # POST url: http://localhost:8080/ip
+02/10/2021 12:40:28 PM - INFO: # Actual response code: 404
+</pre>
+    </div>
+</body>
+</html>
