@@ -7,20 +7,9 @@ pipeline{
             choices: ['chrome', 'firefox'])
     }
     stages{
-        stage('Starting Docker Grid'){
-            steps{
-                sh "docker-compose up -d"
-                sh "sleep 10"
-            }
-        }
         stage('Execution'){
             steps{
                 sh "pytest"
-            }
-        }
-        stage('Stopping Docker Grid'){
-            steps{
-                sh "docker-compose down"
             }
         }
     }
